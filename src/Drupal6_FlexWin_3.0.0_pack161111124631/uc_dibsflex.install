@@ -1,0 +1,266 @@
+<?php
+// $Id: uc_dibsflex.install,v 1.0.0.14 2011/07/21 15:34:12 dibs Exp $
+
+/**
+ * @file
+ * Install file for uc_dibsflex.module.
+ */
+
+/**
+ * Implementation of hook_schema().
+ */
+function uc_dibsflex_schema() {
+    $schema = array();
+    if(db_table_exists('uc_dibs_orderdata') === FALSE) {
+    $schema['uc_dibs_orderdata'] = array(
+        'description' => t('DIBS orders payment log'),
+        'fields' => array(
+            'orderid' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+            ),
+            'transact' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '50',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'status' => array(
+                'description' => t('0 = unpaid, 1 = paid'),
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'amount' => array(
+                'description' => '',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'currency' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'paytype' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'PBB_customerId' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'PBB_deliveryAddress' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'unsigned' => FALSE,
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'PBB_deliveryCountryCode' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),  
+            'PBB_deliveryPostalCode' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'PBB_deliveryPostalPlace' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'PBB_firstName' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'PBB_lastName' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'cardnomask' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'cardprefix' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'cardexpdate' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'cardcountry' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'acquirer' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'enrolled' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'fee' => array(
+                'description' => '',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'test' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'unsigned' => FALSE,
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'uniqueoid' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'unsigned' => FALSE,
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'approvalcode' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'voucher' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'amountoriginal' => array(
+                'description' => '',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'voucheramount' => array(
+                'description' => '',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'voucherpaymentid' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'voucherentry' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'voucherrest' => array(
+                'description' => '',
+                'type' => 'varchar',
+                'length' => '45',
+                'not null' => TRUE,
+                'default' => '',
+            ),
+            'ordercancellation' => array(
+                'description' => t('0 = NotPerformed, 1 = Performed'),
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'successaction' => array(
+                'description' => t('0 = NotPerformed, 1 = Performed'),
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+             ),
+             'callback' => array(
+                'description' => t('0 = NotPerformed, 1 = Performed'),
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+        ),
+        'indexes' => array(
+            'orderid' => array('orderid'),
+        ),
+    );  
+    }
+    
+  return $schema;
+}
+ 
+/**
+ * Implementation of hook_install().
+ */
+function uc_dibsflex_install() {
+    @drupal_install_schema('uc_dibsflex');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function uc_dibsflex_uninstall() {
+  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_dibsflex\_%'");
+}

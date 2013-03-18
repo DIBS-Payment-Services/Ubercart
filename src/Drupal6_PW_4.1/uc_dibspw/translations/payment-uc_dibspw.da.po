@@ -1,0 +1,365 @@
+# $Id: payment-uc_dibs.da.po,v 1.0.0.14 2011/08/03 15:34:12 dibs Exp $
+#
+# Danish translation of uc_dibs (1.0.0.14)
+# Copyright 2011 DIBS
+# Generated from files:
+#  uc_dibs.pages.inc: n/a
+#  uc_dibs.module,v 1.0.0.14 2011/07/21 15:34:12 dibs
+#  uc_dibs.info,v 1.0.0.14 2011/07/21 15:34:12 dibs
+#  uc_dibs.install,v 1.0.0.14 2011/07/21 15:34:12 dibs
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: uc_dibs v 1.0.0.14\n"
+"POT-Creation-Date: 2011-08-03 15:14+0300\n"
+"PO-Revision-Date: 2011-08-03 15:14+0300\n
+"Last-Translator: dibs\n"
+"Language-Team: Danish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: uc_dibs.pages.inc:19
+msgid "A fatal error has occured!"
+msgstr ""
+
+#: uc_dibs.pages.inc:20
+msgid "Return To Shop"
+msgstr ""
+
+#: uc_dibs.pages.inc:28
+msgid "An error has occurred during payment.  Please contact us to ensure your order has submitted."
+msgstr ""
+
+#: uc_dibs.pages.inc:33
+msgid "Unknown orderid was returned from DIBS payment gateway!"
+msgstr ""
+
+#: uc_dibs.pages.inc:39
+msgid "No orderid was returned from DIBS payment gateway!"
+msgstr ""
+
+#: uc_dibs.pages.inc:54
+msgid "The amount received from DIBS payment gateway differs from original order amount!"
+msgstr ""
+
+#: uc_dibs.pages.inc:59
+msgid "No amount was returned from DIBS payment gateway!"
+msgstr ""
+
+#: uc_dibs.pages.inc:68
+msgid "The currency type received from DIBS payment gateway differs from original order currency type!"
+msgstr ""
+
+#: uc_dibs.pages.inc:73
+msgid "No currency type was returned from DIBS payment gateway!"
+msgstr ""
+
+#: uc_dibs.pages.inc:82
+msgid "The MD5 key does not match!"
+msgstr ""
+
+#: uc_dibs.pages.inc:91
+msgid "The fingerprint key does not match!"
+msgstr ""
+
+#: uc_dibs.pages.inc:110
+msgid "Order created through website."
+msgstr ""
+
+#: uc_dibs.pages.inc:25;126;564
+msgid "dibs"
+msgstr ""
+
+#: uc_dibs.pages.inc:25
+msgid "Successful transaction. Order: !order_id."
+msgstr ""
+
+#: uc_dibs.pages.inc:126
+msgid "Callback performed for order: !order_id."
+msgstr ""
+
+#: uc_dibs.pages.inc:564
+msgid "Order canceled: !order_id."
+msgstr ""
+
+#: uc_dibs.module:103;136
+msgid "DIBS | Secure Payment Services"
+msgstr ""
+
+#: uc_dibs.module:108 uc_dibs.info:0
+msgid "DIBS"
+msgstr ""
+
+#: uc_dibs.module:110
+msgid "DIBS Payments"
+msgstr ""
+
+#: uc_dibs.module:111;36
+msgid "You will be redirected to DIBS in a few seconds..."
+msgstr ""
+
+#: uc_dibs.module:134
+msgid "Title"
+msgstr ""
+
+#: uc_dibs.module:135
+msgid "Payment method name displayed for customers. Ex: DibsGW"
+msgstr ""
+
+#: uc_dibs.module:141
+msgid "DIBS Merchant ID"
+msgstr ""
+
+#: uc_dibs.module:142
+msgid "Your dibs merchant account number."
+msgstr ""
+
+#: uc_dibs.module:149
+msgid "DIBS checkout type"
+msgstr ""
+
+#: uc_dibs.module:151
+msgid "FlexWin"
+msgstr ""
+
+#: uc_dibs.module:152
+msgid "Standart Payment Window"
+msgstr ""
+
+#: uc_dibs.module:153
+msgid "Mobile Payment Window"
+msgstr ""
+
+#: uc_dibs.module:160
+msgid "Currency"
+msgstr ""
+
+#: uc_dibs.module:167
+msgid "Enable test mode."
+msgstr ""
+
+#: uc_dibs.module:173
+msgid "Unique order id"
+msgstr ""
+
+#: uc_dibs.module:179
+msgid "Paytype"
+msgstr ""
+
+#: uc_dibs.module:186
+msgid "Language Payment Windows"
+msgstr ""
+
+#: uc_dibs.module:187
+msgid "Adjust language for Standart and Mobile Payment Windows."
+msgstr ""
+
+#: uc_dibs.module:189;203
+msgid "Danish"
+msgstr ""
+
+#: uc_dibs.module:190;205
+msgid "English"
+msgstr ""
+
+#: uc_dibs.module:191;207
+msgid "Finnish"
+msgstr ""
+
+#: uc_dibs.module:192;211
+msgid "Norwegian"
+msgstr ""
+
+#: uc_dibs.module:193;214
+msgid "Swedish"
+msgstr ""
+
+#: uc_dibs.module:200
+msgid "Language FlexWin"
+msgstr ""
+
+#: uc_dibs.module:201;278
+msgid "Adjust language for FlexWin."
+msgstr ""
+
+#: uc_dibs.module:204
+msgid "Dutch"
+msgstr ""
+
+#: uc_dibs.module:206
+msgid "Faroese"
+msgstr ""
+
+#: uc_dibs.module:208
+msgid "French"
+msgstr ""
+
+#: uc_dibs.module:209
+msgid "German"
+msgstr ""
+
+#: uc_dibs.module:210
+msgid "Italian"
+msgstr ""
+
+#: uc_dibs.module:212
+msgid "Polish"
+msgstr ""
+
+#: uc_dibs.module:213
+msgid "Spanish"
+msgstr ""
+
+#: uc_dibs.module:221
+msgid "HMAC"
+msgstr ""
+
+#: uc_dibs.module:222
+msgid "Transaction protection for Standart and Mobile Payment Windows."
+msgstr ""
+
+#: uc_dibs.module:228
+msgid "MD5 Key 1"
+msgstr ""
+
+#: uc_dibs.module:229;236
+msgid "Transaction protection for FlexWin."
+msgstr ""
+
+#: uc_dibs.module:235
+msgid "MD5 Key 2"
+msgstr ""
+
+#: uc_dibs.module:242
+msgid "Add fee"
+msgstr ""
+
+#: uc_dibs.module:243
+msgid "Add fee to Standart Payment Window and FlexWin amounts."
+msgstr ""
+
+#: uc_dibs.module:249
+msgid "Vouchers"
+msgstr ""
+
+#: uc_dibs.module:250
+msgid "Allow to customers use vouchers on checkout."
+msgstr ""
+
+#: uc_dibs.module:256
+msgid "Capture Now"
+msgstr ""
+
+#: uc_dibs.module:257;264;271
+msgid "Only used if FlexWin is selected."
+msgstr ""
+
+#: uc_dibs.module:263
+msgid "Skip last page"
+msgstr ""
+
+#: uc_dibs.module:270
+msgid "Account"
+msgstr ""
+
+#: uc_dibs.module:277
+msgid "FlexWin Decorator"
+msgstr ""
+
+#: uc_dibs.module:280
+msgid "Default"
+msgstr ""
+
+#: uc_dibs.module:281
+msgid "Basal"
+msgstr ""
+
+#: uc_dibs.module:282
+msgid "Rich"
+msgstr ""
+
+#: uc_dibs.module:283
+msgid "Own Decorator"
+msgstr ""
+
+#: uc_dibs.module:290
+msgid "FlexWin Color"
+msgstr ""
+
+#: uc_dibs.module:291
+msgid "Adjust color for FlexWin."
+msgstr ""
+
+#: uc_dibs.module:293
+msgid "None"
+msgstr ""
+
+#: uc_dibs.module:294
+msgid "Sand"
+msgstr ""
+
+#: uc_dibs.module:295
+msgid "Grey"
+msgstr ""
+
+#: uc_dibs.module:296
+msgid "Blue"
+msgstr ""
+
+#: uc_dibs.module:303
+msgid "Distribution method"
+msgstr ""
+
+#: uc_dibs.module:304
+msgid "Only relevant for PayByBill payment type."
+msgstr ""
+
+#: uc_dibs.module:306
+msgid "-"
+msgstr ""
+
+#: uc_dibs.module:307
+msgid "Paper"
+msgstr ""
+
+#: uc_dibs.module:308
+msgid "Email"
+msgstr ""
+
+#: uc_dibs.module:545
+msgid "Submit Order"
+msgstr ""
+
+#: uc_dibs.module:891
+msgid "Order"
+msgstr ""
+
+#: uc_dibs.module:896
+msgid "Tax rule"
+msgstr ""
+
+#: uc_dibs.module:901
+msgid "User"
+msgstr ""
+
+#: uc_dibs.module:20;44
+msgid "Order complete"
+msgstr ""
+
+#: uc_dibs.module:28
+msgid "Order canceled"
+msgstr ""
+
+#: uc_dibs.install:16
+msgid "DIBS orders payment log"
+msgstr ""
+
+#: uc_dibs.install:32
+msgid "0 = unpaid, 1 = paid"
+msgstr ""
+
+#: uc_dibs.install:224;231;238
+msgid "0 = NotPerformed, 1 = Performed"
+msgstr ""

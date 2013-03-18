@@ -1,0 +1,14 @@
+; $Id: uc_dibsflex.info,v 2.0.0 2011/10/10 15:45:12 dibs Exp $
+name = DIBS FlexWin
+description = FlexWin integration of DIBS payment services.
+dependencies[] = uc_payment
+dependencies[] = uc_taxes
+package = Ubercart - payment
+core = 6.x
+php = 5.2.x
+
+; Information added by drupal.org packaging script on 2011-10-10
+version = "6.x-2.4"
+core = "6.x"
+project = "uc_dibsflex"
+datestamp = "1318279512"

@@ -1,0 +1,187 @@
+<?php
+// $Id: uc_dibspw.install,v 2.0.0 2011/07/21 15:34:12 dibs Exp $
+
+/**
+ * @file
+ * Install file for uc_dibspw.module.
+ */
+
+/**
+ * Implementation of hook_schema().
+ */
+function uc_dibspw_schema() {
+    $schema = array();
+    if(db_table_exists('uc_dibspw_results') === FALSE) {
+        $schema['uc_dibspw_results'] = array(
+            'description' => 'TODO: please describe this table!',
+            'fields' => array(
+                'id' => array(
+                    'description' => '',
+                    'type' => 'serial',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE,
+                ),
+                'orderid' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '100',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+                'status' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '10',
+                    'not null' => TRUE,
+                    'default' => '0',
+                ),
+                'testmode' => array(
+                    'description' => '',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'size' => 'tiny',
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'transaction' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '100',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+                'amount' => array(
+                    'description' => '',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'currency' => array(
+                    'description' => '',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'size' => 'small',
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'fee' => array(
+                    'description' => '',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'paytype' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '32',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+                'voucheramount' => array(
+                    'description' => '',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'amountoriginal' => array(
+                    'description' => '',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'ext_info' => array(
+                    'description' => '',
+                    'type' => 'text',
+                    'not null' => FALSE,
+                ),
+                'validationerrors' => array(
+                    'description' => '',
+                    'type' => 'text',
+                    'not null' => FALSE,
+                ),
+                'capturestatus' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '10',
+                    'not null' => TRUE,
+                    'default' => '0',
+                ),
+                'actioncode' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '20',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),  
+                'success_action' => array(
+                    'description' => '0 = NotPerformed, 1 = Performed',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'size' => 'tiny',
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'cancel_action' => array(
+                    'description' => '0 = NotPerformed, 1 = Performed',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'size' => 'tiny',
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'callback_action' => array(
+                    'description' => '0 = NotPerformed, 1 = Performed',
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'size' => 'tiny',
+                    'not null' => TRUE,
+                    'default' => 0,
+                ),
+                'success_error' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '100',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+                'callback_error' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '100',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+                'sysmod' => array(
+                    'description' => '',
+                    'type' => 'varchar',
+                    'length' => '10',
+                    'not null' => TRUE,
+                    'default' => '',
+                ),
+            ),
+            'primary key' => array('id'),
+            'indexes' => array(
+                'orderid' => array('orderid'),
+            ),
+        );
+    }
+  return $schema;
+}
+ 
+/**
+ * Implementation of hook_install().
+ */
+function uc_dibspw_install() {
+    //@drupal_install_schema('uc_dibspw');
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function uc_dibspw_uninstall() {
+  db_query("DELETE FROM {variable} WHERE name LIKE 'uc_dibspw\_%'");
+}

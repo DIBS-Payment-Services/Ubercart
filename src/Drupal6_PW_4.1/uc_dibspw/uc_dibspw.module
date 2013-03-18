@@ -1,0 +1,280 @@
+<?php
+// $Id: uc_dibspw.module,v 1.0.0.14 2011/07/21 15:34:12 dibs Exp $
+
+/**
+ * @file
+ * Integrates DIBS Payment Service
+ */
+
+require_once dirname(__FILE__) . '/dibs_api/pw/dibs_pw_api.php';
+
+function getDibspwObj() {
+    return new dibs_pw_api();
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function uc_dibspw_menu() {
+    $items = array();
+
+    $items['cart/dibspw/success'] = array(
+        'title' => 'Order complete',
+        'page callback' => 'uc_dibspw_success',
+        'access callback' => 'uc_dibspw_completion_access',
+        'type' => MENU_CALLBACK,
+        'file' => 'uc_dibspw.pages.inc',
+    );
+
+    $items['cart/dibspw/cancel'] = array(
+        'title' => 'Order canceled',
+        'page callback' => 'uc_dibspw_cancel',
+        'access callback' => 'uc_dibspw_completion_access',
+        'type' => MENU_CALLBACK,
+        'file' => 'uc_dibspw.pages.inc',
+    );
+    
+    $items['cart/dibspw/redirect'] = array(
+        'title' => 'You will be redirected to DIBS in a few seconds...',
+        'page callback' => 'uc_dibspw_redirect',
+        'access callback' => 'uc_dibspw_completion_access',
+        'type' => MENU_CALLBACK,
+        'file' => 'uc_dibspw.pages.inc',
+    );
+    
+    $items['cart/dibspw/callback'] = array(
+        'title' => 'Order complete',
+        'page callback' => 'uc_dibspw_callback',
+        'access callback' => 'uc_dibspw_completion_access',
+        'type' => MENU_CALLBACK,
+        'file' => 'uc_dibspw.pages.inc',
+    );
+    
+    return $items;
+}
+    
+ /**
+  * Implementation of hook_init().
+  */
+function uc_dibspw_init() {
+    global $conf;
+    $conf['i18n_variables'][] = 'uc_dibspw_method_title';
+    $conf['i18n_variables'][] = 'uc_dibspw_checkout_button';
+}
+    
+/**
+ * Make sure anyone can complete their dibs orders.
+ */
+function uc_dibspw_completion_access() {
+    return TRUE;
+}
+
+/**
+ * Implementation of hook_ucga_display().
+ */
+function uc_dibspw_ucga_display() {
+    // For UC Google Analytics
+    if (arg(0) == 'cart' && arg(1) == 'dibspw' && arg(2) == 'success') {
+        return TRUE;
+    }
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function uc_dibspw_form_alter(&$form, $form_state, $form_id) {
+    if ($form_id == 'uc_cart_checkout_review_form' && ($order_id = intval($_SESSION['cart_order'])) > 0) {
+        $order = uc_order_load($order_id);
+
+        if ($order->payment_method == 'dibspw') {
+            drupal_add_css(drupal_get_path('module', 'uc_dibspw') .'/uc_dibspw.css');
+            unset($form['submit']);
+            $form['#prefix'] = '<table id="dibspw-tab"><tr><td>';
+            $form['#suffix'] = '</td><td>'. drupal_get_form('uc_dibspw_form', $order) .'</td></tr></table>';
+        }
+    }
+}
+
+/**
+ * Implementation of hook_payment_method().
+ *
+ * @see uc_payment_method_dibs()
+ */
+function uc_dibspw_payment_method() {
+    $path = base_path() . drupal_get_path('module', 'uc_dibspw');
+    $title = variable_get('uc_dibspw_method_title', t('DIBS Payment Window'));
+    $title .= '<br /><img src="'. $path .'/uc_dibspw.gif" style="position: relative; left: 2.5em;" />';
+
+    $methods[] = array(
+        'id' => 'dibspw',
+        'name' => t('DIBS Payment Window'),
+        'title' => $title,
+        'review' => t('DIBS Payment Window'),
+        'desc' => t('You will be redirected to DIBS in a few seconds...'),
+        'callback' => 'uc_payment_method_dibspw',
+        'weight' => 1,
+        'checkout' => TRUE,
+        'no_gateway' => TRUE,
+    );
+    
+    return $methods;
+}
+
+
+/**
+ * Add DIBS settings to the payment method settings form.
+ *
+ * @see uc_dibspw_payment_method()
+ */
+function uc_payment_method_dibspw($op, &$arg1) {
+    switch ($op) {
+        /** Settings page **/
+        case 'settings':
+           $form['uc_dibspw_method_title'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Title'),
+                '#description' => t('Payment method name displayed for customers. Ex: DibsGW'),
+                '#default_value' => variable_get('uc_dibspw_method_title', t('DIBS | Secure Payment Services')),
+            );
+            
+            $form['uc_dibspw_mid'] = array(
+                '#type' => 'textfield',
+                '#title' => t('DIBS Merchant ID'),
+                '#description' => t('Your DIBS merchant account number.'),
+                '#default_value' => variable_get('uc_dibspw_mid', ''),
+                '#size' => 16,
+            );
+
+            $form['uc_dibspw_curr'] = array(
+                '#type' => 'select',
+                '#title' => t('Currency'),
+                '#options' => array_flip(dibs_pw_api::api_dibs_get_currencyArray()),
+                '#default_value' => variable_get('uc_dibspw_curr', '840'),
+            );
+            
+            $form['uc_dibspw_method'] = array(
+                '#type' => 'select',
+                '#title' => t('DIBS checkout type'),
+                '#options' => array(
+                    '1' => t('Auto'),
+                    '2' => t('DIBS Payment Window'),
+                    '3' => t('Mobile Payment Window'),
+                ),
+                '#default_value' => variable_get('uc_dibspw_method', '2'),
+            );
+      
+            $form['uc_dibspw_hmac'] = array(
+                '#type' => 'textfield',
+                '#title' => t('HMAC'),
+                '#description' => t('Transaction protection.'),
+                '#default_value' => variable_get('uc_dibspw_hmac', ''),
+            );
+            
+            $form['uc_dibspw_testmode'] = array(
+                '#type' => 'checkbox',
+                '#title' => t('Test mode'),
+                '#description' => t('Run transactions in test mode.'),
+                '#return_value' => 'yes',
+                '#default_value' => variable_get('uc_dibspw_testmode', TRUE),
+            );
+            
+            $form['uc_dibspw_fee'] = array(
+                '#type' => 'checkbox',
+                '#title' => t('Add fee'),
+                '#return_value' => 'yes',
+                '#description' => t('Customer pays fee.'),
+                '#default_value' => variable_get('uc_dibspw_fee', FALSE),
+            );
+
+            $form['uc_dibspw_capturenow'] = array(
+                '#type' => 'checkbox',
+                '#title' => t('Capture now'),
+                '#description' => t('Function to automatically capture the transaction upon a successful authorization (DIBS PW only).'),
+                '#return_value' => 'yes',
+                '#default_value' => variable_get('uc_dibspw_capturenow', FALSE),
+            );
+            
+            $form['uc_dibspw_voucher'] = array(
+                '#type' => 'checkbox',
+                '#title' => t('Vouchers'),
+                '#return_value' => 'yes',
+                '#description' => t('Allow to customers use vouchers on checkout (Mobile PW only).'),
+                '#default_value' => variable_get('uc_dibspw_voucher', FALSE),
+            );
+            
+            $form['uc_dibspw_uniq'] = array(
+                '#type' => 'checkbox',
+                '#title' => t('Unique order ID'),
+                '#description' => t('Check if order ID is unique (Mobile PW only).'),
+                '#return_value' => 'yes',
+                '#default_value' => variable_get('uc_dibspw_uniq', FALSE),
+            );
+            
+            $form['uc_dibspw_paytype'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Paytype'),
+                '#default_value' => variable_get('uc_dibspw_paytype', ''),
+                '#size' => 16,
+            );
+      
+            $form['uc_dibspw_lang'] = array(
+                '#type' => 'select',
+                '#title' => t('Language:'),
+                '#description' => t('Adjust language for Payment Window.'),
+                '#options' => array(
+                    'da_DK' => t('Danish'),
+                    'en_UK' => t('English'),
+                    'fi_FIN' => t('Finnish'),
+                    'nb_NO' => t('Norwegian'),
+                    'sv_SE' => t('Swedish'),
+                ),
+                '#default_value' => variable_get('uc_dibspw_lang', 'en_UK'),
+            );
+           
+            $form['uc_dibspw_account'] = array(
+                '#type' => 'textfield',
+                '#title' => t('Account'),
+                '#description' => t('Account id used to visually separate transactions in admin.'),
+                '#default_value' => variable_get('uc_dibspw_account', ''),
+            );
+      
+            $form['uc_dibspw_distr'] = array(
+                '#type' => 'select',
+                '#title' => t('Distribution method'),
+                '#description' => t('Only relevant for invoice payment types (DIBS PW only).'),
+                '#options' => array(
+                    'empty' => t('-'),
+                    'paper' => t('Paper'),
+                    'email' => t('Email'),
+                ),
+                '#default_value' => variable_get('uc_dibspw_distr', 'empty'),
+            );
+            
+            return $form;
+      break;
+    }
+}
+
+/**
+ * Prepare data to send.
+ */
+function uc_dibspw_form($form_state, $order) {
+    // adding separate tax rates for each product
+    getDibspwObj()->cms_dibs_recalculate_tax($order);
+    
+    $aData = getDibspwObj()->api_dibs_get_requestFields($order);
+    
+    $form['#action'] = url('cart/dibspw/redirect', array('absolute' => TRUE));
+
+    foreach ($aData as $name => $value) {
+        $form[$name] = array('#type' => 'hidden', '#value' => $value);
+    }
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit Order'),
+    );
+
+    return $form;
+}
+?>

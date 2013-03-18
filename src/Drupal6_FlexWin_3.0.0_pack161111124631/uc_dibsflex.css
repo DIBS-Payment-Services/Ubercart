@@ -1,0 +1,9 @@
+#dibsflex-tab {
+    margin: 0px;
+}
+
+#dibsflex-tab td {
+    border: none;
+    background-color: #DDDDDD;
+    text-align: center;
+}

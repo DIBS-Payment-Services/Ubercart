@@ -1,4 +1,4 @@
 Ubercart
-========
+=====
 
-DIBS Ubercart Shop Module
+This file will soon be updated with installation guide.

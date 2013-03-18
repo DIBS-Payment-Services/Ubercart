@@ -1,0 +1,15 @@
+; $Id: uc_dibspw.info,v 4.1.0 2012/03/03 15:45:12 dibs Exp $
+name = DIBS Payment Window
+description = DIBS Payment Window + Mobile Payment Window integration.
+dependencies[] = uc_payment
+dependencies[] = uc_cart
+dependencies[] = uc_taxes
+package = Ubercart - payment
+core = 6.x
+php = 5.2.x
+
+; Information added by drupal.org packaging script on 2012-03-03
+version = "6.x-2.7"
+core = "6.x"
+project = "uc_dibspw"
+datestamp = "1330811112"
