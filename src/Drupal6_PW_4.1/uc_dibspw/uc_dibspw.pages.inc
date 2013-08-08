@@ -57,7 +57,7 @@ function uc_dibspw_redirect() {
         $sOutput .= '<input type="hidden" name="' . $sKey . '" value="' . $sVal . '" />'."\r\n";
     }
     
-    $sPage = '<form id="payment" action="' . getDibspwObj()->api_dibs_get_formAction() . '" method="POST">
+    $sPage = '<form id="payment" accept-charset="UTF-8"  action="' . getDibspwObj()->api_dibs_get_formAction() . '" method="POST">
                 '.$sOutput.'
               </form>
               <script type="text/javascript">

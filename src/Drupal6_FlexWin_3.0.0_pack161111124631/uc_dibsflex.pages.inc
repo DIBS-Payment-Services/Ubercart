@@ -84,7 +84,7 @@ function uc_dibsflex_redirect() {
         $sOutput .= '<input type="hidden" name="'.$key.'" value="'.$val.'" />'."\r\n";
     }
     
-    $sPage = '<form id="payment" action="' . getDibsFlexObj()->dibsflex_api_getFormAction() . '" method="POST">
+    $sPage = '<form id="payment"  accept-charset="UTF-8" action="' . getDibsFlexObj()->dibsflex_api_getFormAction() . '" method="POST">
                 '.$sOutput.'
               </form>
               <script type="text/javascript">
