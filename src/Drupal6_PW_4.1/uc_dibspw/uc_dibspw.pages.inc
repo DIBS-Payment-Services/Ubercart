@@ -36,6 +36,17 @@ function uc_dibspw_callback() {
         watchdog('dibspw', 'Callback performed for order: !order_id.', 
                 array('!order_id' => check_plain($_POST['orderid'])));
         $order = uc_order_load($_POST['orderid']);
+	$dibsInvoiceFields = array("acquirerLastName",          "acquirerFirstName",
+                                       "acquirerDeliveryAddress",   "acquirerDeliveryPostalCode",
+                                       "acquirerDeliveryPostalPlace", "transaction" );
+        $dibsInvoiceFieldsString = "";
+  
+        foreach($_POST as $key=>$value) {
+              if(in_array($key, $dibsInvoiceFields)) {
+                   $dibsInvoiceFieldsString .= "{$key}={$value}<br>";              
+              }
+        } 
+        uc_order_comment_save($order->order_id, 0, $dibsInvoiceFieldsString , 'admin');
         getDibspwObj()->api_dibs_action_callback($order);
     }
     else exit((string)11);
