@@ -139,7 +139,7 @@ function uc_payment_method_dibspw($op, &$arg1) {
             
             $form['uc_dibspw_mid'] = array(
                 '#type' => 'textfield',
-                '#title' => t('DIBS Merchant ID'),
+                '#title' => t('DIBS Integration ID'),
                 '#description' => t('Your DIBS merchant account number.'),
                 '#default_value' => variable_get('uc_dibspw_mid', ''),
                 '#size' => 16,
